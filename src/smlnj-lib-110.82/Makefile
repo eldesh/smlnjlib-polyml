@@ -2,19 +2,29 @@ POLYML      ?= poly
 POLYMLC     ?= polyc
 POLYMLFLAGS ?= -q --error-exit --use "../../script/load.sml"
 
-SRC := $(wildcard ./Util/*.sml)
+TARGET := \
+	smlnj-util-lib.poly \
+	regexp-lib.poly
 
-TARGET := smlnj-util-lib-$(SMLNJLIB_POLYML_VER).poly
+define build-module
+@echo "  [POLYML] $@"
+@echo "" | $(POLYML) $(POLYMLFLAGS) \
+	$(foreach dep,$(2),--eval 'PolyML.loadModule "$(dep)"') \
+	--eval 'load "./$(1)/load.sml"' \
+	--use ./$(1)/export.sml \
+	--eval 'PolyML.SaveState.saveModule ("$@", $(1))'
+endef
+
 
 all: $(TARGET)
 
 
-$(TARGET): $(SRC)
-	@echo "  [POLYML] $@"
-	@echo "" | $(POLYML) $(POLYMLFLAGS) \
-		--eval 'load "./Util/smlnj-lib-polyml.sml"' \
-		--use ./Util/export.sml \
-		--eval 'PolyML.SaveState.saveModule ("$(TARGET)", SmlnjUtilLib)'
+smlnj-util-lib.poly: $(wildcard ./Util/*.sml)
+	$(call build-module,Util)
+
+
+regexp-lib.poly: smlnj-util-lib.poly $(wildcard ./RegExp/*.sml ./RegExp/BackEnd/* ./RegExp/FrontEnd/* ./RegExp/Glue/*)
+	$(call build-module,RegExp,./$<)
 
 
 .PHONY: clean

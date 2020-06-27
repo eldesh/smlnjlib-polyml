@@ -1,5 +1,5 @@
 
-val SmlnjUtilLib =
+val Util =
   {
     sigs = [
       "ARRAY_SORT",
