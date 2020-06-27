@@ -32,6 +32,10 @@ $ sudo make PREFIX=$HOME/local install
 ```
 
 
+## License
+
+see LICENSE file for details.
+
 
 [njlib_mlton]: http://mlton.org/SMLNJLibrary
 
