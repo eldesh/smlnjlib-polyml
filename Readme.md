@@ -3,7 +3,7 @@
 `smlnj-lib` is a collection of utility libraries for Standard ML.
 
 The original `smlnj-lib` is distributed with SML/NJ.
-But `smlnj-lib` has been ported to MLton with some adjustment[^njlib_mlton].
+But `smlnj-lib` has been ported to MLton with some adjustment. (see [MLton/SMLNJLibrary][njlib_mlton])
 
 This repository provides re-ported `smlnj-lib` from MLton to Poly/ML.
 
@@ -33,5 +33,5 @@ $ sudo make PREFIX=$HOME/local install
 
 
 
-njlib_mlton: http://mlton.org/SMLNJLibrary
+[njlib_mlton]: http://mlton.org/SMLNJLibrary
 
