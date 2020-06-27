@@ -32,6 +32,17 @@ $ sudo make PREFIX=$HOME/local install
 ```
 
 
+## Load into REPL
+
+For loading smlnjlib into Poly/ML REPL, use `PolyML.loadModule` function.
+
+```sh
+$ make
+$ poly
+> PolyML.loadModule "./build/smlnj-util-lib-0.0.1.poly";
+```
+
+
 ## License
 
 see LICENSE file for details.
