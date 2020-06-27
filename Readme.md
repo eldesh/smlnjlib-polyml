@@ -17,6 +17,21 @@ $ make
 ```
 
 
+## Install
+
+Install library with `make install`.
+
+```sh
+$ sudo make install
+```
+
+It is also possible specify install directory with `PREFIX` parameter.
+
+```sh
+$ sudo make PREFIX=$HOME/local install
+```
+
+
 
 njlib_mlton: http://mlton.org/SMLNJLibrary
 
