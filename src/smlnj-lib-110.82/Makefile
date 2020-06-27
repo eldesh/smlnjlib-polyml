@@ -1,31 +1,23 @@
-## Copyright (C) 2009,2016,2018 Matthew Fluet.
- # Copyright (C) 1999-2006 Henry Cejtin, Matthew Fluet, Suresh
- #    Jagannathan, and Stephen Weeks.
- # Copyright (C) 1997-2000 NEC Research Institute.
- #
- # MLton is released under a BSD-style license.
- # See the file MLton-LICENSE for details.
- ##
+POLYML ?= poly
+POLYMLC ?= polyc
+POLYMLFLAGS ?= -q --error-exit --use "../../script/load.sml"
 
-FIND := find
-GZIP := gzip
-PATCH := patch
-TAR := tar
+SRC := $(wildcard ./smlnj-lib/Util/*.sml)
 
-######################################################################
-######################################################################
+VERSION := 0.0.1
+TARGET := smlnj-util-lib-$(VERSION).poly
 
-all: smlnj-lib/README.mlton
+all: $(TARGET)
 
-smlnj-lib/README.mlton: smlnj-lib.tgz smlnj-lib.patch
-	rm -rf smlnj-lib
-	$(GZIP) -dc smlnj-lib.tgz | $(TAR) xf -
-	$(FIND) smlnj-lib -name '._*' -prune -exec rm -f '{}' ';'
-	chmod -R a+r smlnj-lib
-	chmod -R g-s smlnj-lib
-	$(PATCH) -s -d smlnj-lib -p1 < smlnj-lib.patch
-	cp smlnj-lib/LICENSE ../../doc/license/SMLNJ-LIB-LICENSE
+
+$(TARGET): $(SRC)
+	echo "" | $(POLYML) $(POLYMLFLAGS) \
+		--eval 'load "./smlnj-lib/Util/smlnj-lib-polyml.sml"' \
+		--use ./smlnj-lib/Util/export.sml \
+		--eval 'PolyML.SaveState.saveModule ("$(TARGET)", SmlnjUtilLib)'
+
 
 .PHONY: clean
 clean:
-	../../bin/clean
+	-$(RM) $(TARGET)
+
