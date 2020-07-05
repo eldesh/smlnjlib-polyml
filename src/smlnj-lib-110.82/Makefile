@@ -3,8 +3,10 @@ POLYMLC     ?= polyc
 POLYMLFLAGS ?= -q --error-exit --use "../../script/load.sml"
 
 TARGET := \
+	unsafe.poly \
 	smlnj-util-lib.poly \
 	regexp-lib.poly
+
 
 define build-module
 @echo "  [POLYML] $@"
@@ -19,8 +21,12 @@ endef
 all: $(TARGET)
 
 
-smlnj-util-lib.poly: $(wildcard ./Util/*.sml)
-	$(call build-module,Util)
+unsafe.poly: $(wildcard ./Unsafe/*)
+	$(call build-module,Unsafe)
+
+
+smlnj-util-lib.poly: unsafe.poly $(wildcard ./Util/*.sml)
+	$(call build-module,Util,./unsafe.poly)
 
 
 regexp-lib.poly: smlnj-util-lib.poly $(wildcard ./RegExp/*.sml ./RegExp/BackEnd/* ./RegExp/FrontEnd/* ./RegExp/Glue/*)
