@@ -1,7 +1,7 @@
 
 export POLYML      := poly
 export POLYMLC     := polyc
-export POLYMLFLAGS := -q --error-exit --use "../../script/load.sml"
+export POLYMLFLAGS := -q --error-exit --use $(shell readlink -f ./script/load.sml)
 
 # library version
 SMLNJLIB_POLYML_VER := 0.0.1
