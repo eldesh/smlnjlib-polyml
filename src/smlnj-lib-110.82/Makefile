@@ -3,7 +3,6 @@ POLYMLC     ?= polyc
 POLYMLFLAGS ?= -q --error-exit --use "../../script/load.sml"
 
 TARGET := \
-	unsafe.poly \
 	smlnj-util-lib.poly \
 	regexp-lib.poly
 
