@@ -3,18 +3,14 @@ val Util =
   {
     sigs = [
       "ARRAY_SORT",
-      (*
       "ATOM",
       "BASE64",
-      *)
       "BIT_ARRAY",
       "BIT_VECTOR",
       "CHAR_MAP",
       "DYNAMIC_ARRAY",
       "FIFO",
-      (*
       "FORMAT",
-      *)
       "FORMAT_COMB",
       "GRAPH_SCC",
       "HASH_KEY",
@@ -44,15 +40,14 @@ val Util =
       (*
       "RAND",
       "RANDOM",
-      "SCAN",
       *)
+      "SCAN",
       "SPLAY_TREE",
       "UREF",
       "UTF8"
     ],
     structs = [
       "ANSITerm",
-      (*
       "ArrayQSort",
       "Atom",
       "AtomBinaryMap",
@@ -64,18 +59,15 @@ val Util =
       "AtomTable",
       "Base64",
       "BitArray",
+      (*
       "BitVector",
       *)
       "CharMap",
       "DynamicArray",
       "Fifo",
-      (*
       "Format",
-      *)
       "FormatComb",
-      (*
       "HashString",
-      *)
       "HashTable",
       "IntBinaryMap",
       "IntBinarySet",
@@ -126,9 +118,7 @@ val Util =
       "HashTableFn",
       "Hash2TableFn",
       "IntervalSetFn",
-      (*
       "KeywordFn",
-      *)
       "LeftPriorityQFn",
       "ListMapFn",
       "ListSetFn",
