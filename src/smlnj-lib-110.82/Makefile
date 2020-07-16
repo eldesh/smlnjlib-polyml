@@ -7,7 +7,8 @@ MLYACC      ?= mlyacc-polyml
 TARGET := \
 	smlnj-util-lib.poly \
 	regexp-lib.poly \
-	html-lib.poly
+	html-lib.poly \
+	pp-lib.poly
 
 
 define build-module
@@ -41,6 +42,10 @@ ifeq ($(MLYACC_LIB),)
 	$(error "Please set MLYACC_LIB to path to mlyacc-lib-1.0.0.poly")
 endif
 	$(call build-module,HTML,./$< $(MLYACC_LIB))
+
+
+pp-lib.poly: smlnj-util-lib.poly html-lib.poly $(wildcard ./PP/src/* ./PP/pp-lib.cm ./PP/devices/*)
+	$(call build-module,PP,./smlnj-util-lib.poly ./html-lib.poly)
 
 
 %.lex.sml: %.lex
