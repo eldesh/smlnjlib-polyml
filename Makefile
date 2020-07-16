@@ -2,6 +2,8 @@
 export POLYML      := poly
 export POLYMLC     := polyc
 export POLYMLFLAGS := -q --error-exit --use $(shell readlink -f ./script/load.sml)
+export MLLEX       := mllex-polyml
+export MLYACC      := mlyacc-polyml
 
 # library version
 SMLNJLIB_POLYML_VER := 0.0.1
