@@ -93,12 +93,21 @@ functor HTMLAttrsFn (Err : HTML_ERROR) : HTML_ATTRS =
 		  | cvt (AT_INSTANCE, IMPLICIT) = SOME(NAME attrName)
 		  | cvt (AT_TEXT, v) = SOME v
 		  | cvt (AT_NUMBER, v) = SOME v
-		  | cvt (AT_NAMES names, (NAME s | STRING s)) = (
+		  | cvt (AT_NAMES names, NAME s) = (
 		      case (List.find (eqName s) names)
 		       of NONE => error()
 			| (SOME name) => SOME(NAME name)
 		      (* end case *))
-		  | cvt (AT_IMPLICIT, (NAME s | STRING s)) =
+		  | cvt (AT_NAMES names, STRING s) = (
+		      case (List.find (eqName s) names)
+		       of NONE => error()
+			| (SOME name) => SOME(NAME name)
+		      (* end case *))
+		  | cvt (AT_IMPLICIT, NAME s) =
+		      if (s = attrName)
+			then SOME IMPLICIT
+			else error()
+		  | cvt (AT_IMPLICIT, STRING s) =
 		      if (s = attrName)
 			then SOME IMPLICIT
 			else error()
@@ -138,7 +147,8 @@ functor HTMLAttrsFn (Err : HTML_ERROR) : HTML_ATTRS =
 	  val getFn = bindFindAttr (attrMap, attr)
 	  fun get attrVec = (case (getFn attrVec)
 		 of NONE => NONE
-		  | (SOME((STRING s) | (NAME s))) => SOME s
+		  | (SOME(STRING s)) => SOME s
+		  | (SOME(NAME s)) => SOME s
 		  | _ => (
 		      Err.missingAttrVal (getContext attrVec) attr;
 		      NONE)
@@ -164,7 +174,13 @@ functor HTMLAttrsFn (Err : HTML_ERROR) : HTML_ATTRS =
 	  val getFn = bindFindAttr (attrMap, attr)
 	  fun get attrVec = (case (getFn attrVec)
 		 of NONE => NONE
-		  | (SOME((STRING s) | (NAME s))) => (case (Int.fromString s)
+		  | (SOME(STRING s)) => (case (Int.fromString s)
+		       of NONE =>  (
+			    Err.badAttrVal (getContext attrVec) (attr, s);
+			    NONE)
+			| someN => someN
+		      (* end case *))
+		  | (SOME(NAME s)) => (case (Int.fromString s)
 		       of NONE =>  (
 			    Err.badAttrVal (getContext attrVec) (attr, s);
 			    NONE)
@@ -179,7 +195,13 @@ functor HTMLAttrsFn (Err : HTML_ERROR) : HTML_ATTRS =
 	  val getFn = bindFindAttr (attrMap, attr)
 	  fun get attrVec = (case (getFn attrVec)
 		 of NONE => NONE
-		  | (SOME((STRING s) | (NAME s))) =>
+		  | (SOME(STRING s)) =>
+		      if (size s = 1) then SOME(String.sub(s, 0))
+(** NOTE: we should probably accept &#xx; as a character value **)
+			else  (
+			Err.badAttrVal (getContext attrVec) (attr, s);
+			NONE)
+		  | (SOME(NAME s)) =>
 		      if (size s = 1) then SOME(String.sub(s, 0))
 (** NOTE: we should probably accept &#xx; as a character value **)
 			else  (

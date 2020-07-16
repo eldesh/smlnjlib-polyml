@@ -1,10 +1,13 @@
 POLYML      ?= poly
 POLYMLC     ?= polyc
 POLYMLFLAGS ?= -q --error-exit --use "../../script/load.sml"
+MLLEX       ?= mllex-polyml
+MLYACC      ?= mlyacc-polyml
 
 TARGET := \
 	smlnj-util-lib.poly \
-	regexp-lib.poly
+	regexp-lib.poly \
+	html-lib.poly
 
 
 define build-module
@@ -30,6 +33,24 @@ smlnj-util-lib.poly: unsafe.poly $(wildcard ./Util/*.sml)
 
 regexp-lib.poly: smlnj-util-lib.poly $(wildcard ./RegExp/*.sml ./RegExp/BackEnd/* ./RegExp/FrontEnd/* ./RegExp/Glue/*)
 	$(call build-module,RegExp,./$<)
+
+
+html-lib.poly: smlnj-util-lib.poly $(wildcard ./HTML/*)
+	@echo "MLYACC_LIB: $(MLYACC_LIB)"
+ifeq ($(MLYACC_LIB),)
+	$(error "Please set MLYACC_LIB to path to mlyacc-lib-1.0.0.poly")
+endif
+	$(call build-module,HTML,./$< $(MLYACC_LIB))
+
+
+%.lex.sml: %.lex
+	@echo "  [MLLEX] $<"
+	@$(MLLEX) $<
+
+
+%.gram.sml %.gram.sig %.gram.desc: %.grm
+	@echo "  [MLYACC] $<"
+	@$(MLYACC) $<
 
 
 .PHONY: clean

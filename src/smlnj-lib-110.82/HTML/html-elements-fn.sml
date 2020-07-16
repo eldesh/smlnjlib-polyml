@@ -144,7 +144,8 @@ functor HTMLElementsFn (
    *   3) a string literal enclosed in ''
    *)
     fun scanAttrVal (ctx, attrName, ss) = let
-	  fun isNameChar (#"." | #"-") = true
+	  fun isNameChar #"." = true
+            | isNameChar #"-" = true
 	    | isNameChar c = (Char.isAlphaNum c)
 	  in
 	    case SS.getc ss
