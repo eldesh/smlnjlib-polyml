@@ -1,4 +1,1 @@
-smlnj-util-lib.poly
-regexp-lib.poly
-unsafe.poly
-html-lib.poly
+*.poly
