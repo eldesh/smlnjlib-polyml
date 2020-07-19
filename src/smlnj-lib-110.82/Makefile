@@ -8,7 +8,8 @@ TARGET := \
 	smlnj-util-lib.poly \
 	regexp-lib.poly \
 	html-lib.poly \
-	pp-lib.poly
+	pp-lib.poly \
+	hash-cons-lib.poly
 
 
 define build-module
@@ -46,6 +47,10 @@ endif
 
 pp-lib.poly: smlnj-util-lib.poly html-lib.poly $(wildcard ./PP/src/* ./PP/pp-lib.cm ./PP/devices/*)
 	$(call build-module,PP,./smlnj-util-lib.poly ./html-lib.poly)
+
+
+hash-cons-lib.poly: smlnj-util-lib.poly $(wildcard ./HashCons/*)
+	$(call build-module,HashCons,./$<)
 
 
 %.lex.sml: %.lex

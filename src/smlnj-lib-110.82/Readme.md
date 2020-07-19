@@ -9,7 +9,7 @@ The library is organized as a collection of CM libraries. Here is a roadmap of t
   | ------------------- | --------- | ---------------- | -----------------
   | ✔️                   | Util      | smlnj-lib.cm     | This is the general utility library.
   |                     | Controls  | controls-lib.cm  | This is a library of support code<br/>for managing application controls.
-  |                     | HashCons  | hash-cons-lib.cm | This is a library supporting hash-consing<br/>of data structures and efficient sets and<br/>maps using hash-consed keys.
+  | ✔️                   | HashCons  | hash-cons-lib.cm | This is a library supporting hash-consing<br/>of data structures and efficient sets and<br/>maps using hash-consed keys.
   | ✔️                   | HTML      | html-lib.cm      | This library provides parsing and pretty<br/>printing of HTML (Version 3.2).
   |                     | HTML4     | html4-lib.cm     | This library provides parsing and pretty<br/>printing of HTML (Version 4.01).
   |                     | INet      | inet-lib.cm      | Networking utilities (for both Unix and Windows).
