@@ -16,7 +16,7 @@ BUILD_DIR           := ./build
 
 # install prefix
 PREFIX              := /usr/local
-LIB_DIR             := $(PREFIX)/lib/polyml
+LIB_DIR             := $(PREFIX)/lib
 
 
 all: build_lib
