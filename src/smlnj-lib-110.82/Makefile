@@ -11,6 +11,25 @@ TARGET := \
 	pp-lib.poly \
 	hash-cons-lib.poly
 
+HTML_SRC := \
+	HTML/html-sig.sml \
+	HTML/html.sml \
+	HTML/html-attr-vals.sml \
+	HTML/html-attrs-sig.sml \
+	HTML/html-error-sig.sml \
+	HTML/html-attrs-fn.sml \
+	HTML/html-gram.sig \
+	HTML/html-elements-fn.sml \
+	HTML/html-lex.sml \
+	HTML/html-gram.sml \
+	HTML/check-html-fn.sml \
+	HTML/html-parser-fn.sml \
+	HTML/html-defaults.sml \
+	HTML/make-html.sml \
+	HTML/pr-html.sml \
+	HTML/export.sml \
+	HTML/load.sml
+
 
 define build-module
 @echo "  [POLYML] $@"
@@ -37,10 +56,10 @@ regexp-lib.poly: smlnj-util-lib.poly $(wildcard ./RegExp/*.sml ./RegExp/BackEnd/
 	$(call build-module,RegExp,./$<)
 
 
-html-lib.poly: smlnj-util-lib.poly $(wildcard ./HTML/*)
+html-lib.poly: smlnj-util-lib.poly $(HTML_SRC)
 	@echo "MLYACC_LIB: $(MLYACC_LIB)"
 ifeq ($(MLYACC_LIB),)
-	$(error "Please set MLYACC_LIB to path to mlyacc-lib-1.0.0.poly")
+	$(error Please set MLYACC_LIB to path to mlyacc-lib-1.0.0.poly)
 endif
 	$(call build-module,HTML,./$< $(MLYACC_LIB))
 
@@ -53,12 +72,12 @@ hash-cons-lib.poly: smlnj-util-lib.poly $(wildcard ./HashCons/*)
 	$(call build-module,HashCons,./$<)
 
 
-%.lex.sml: %.lex
+%-lex.sml: %-lex
 	@echo "  [MLLEX] $<"
 	@$(MLLEX) $<
 
 
-%.gram.sml %.gram.sig %.gram.desc: %.grm
+%-gram.sml %-gram.sig %-gram.desc: %-gram
 	@echo "  [MLYACC] $<"
 	@$(MLYACC) $<
 
@@ -66,4 +85,8 @@ hash-cons-lib.poly: smlnj-util-lib.poly $(wildcard ./HashCons/*)
 .PHONY: clean
 clean:
 	-$(RM) $(TARGET)
+	-$(RM) HTML/html-gram.sig
+	-$(RM) HTML/html-gram.sml
+	-$(RM) HTML/html-gram.desc
+	-$(RM) HTML/html-lex.sml
 
