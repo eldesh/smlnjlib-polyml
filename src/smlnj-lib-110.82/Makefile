@@ -9,7 +9,8 @@ TARGET := \
 	regexp-lib.poly \
 	html-lib.poly \
 	pp-lib.poly \
-	hash-cons-lib.poly
+	hash-cons-lib.poly \
+	unsafe.poly
 
 HTML_SRC := \
 	HTML/html-sig.sml \
