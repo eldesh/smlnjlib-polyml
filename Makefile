@@ -34,10 +34,9 @@ all: build_lib
 .PHONY: build_lib
 build_lib:
 	$(MAKE) -C src/smlnj-lib-$(SMLNJLIB_VER)
-	mkdir -p $(BUILD_DIR)
+	@mkdir -p $(BUILD_DIR)
 	@for lib in src/smlnj-lib-$(SMLNJLIB_VER)/*.poly; do \
 		dst=$(BUILD_DIR)/$$(basename $${lib%.poly}-$(SMLNJLIB_POLYML_VER).poly) ; \
-		echo "cp $$lib $$dst" ; \
 		cp $$lib $$dst ; \
 	done
 
@@ -45,8 +44,8 @@ build_lib:
 .PHONY: install
 install: build_lib
 	@for lib in $(BUILD_DIR)/*.poly; do \
-		echo "install -D -m 0644 -t $(PREFIX)/lib $$lib" ; \
-		install -D -m 0644 -t $(PREFIX)/lib $$lib ; \
+		echo "install -D -m 0644 -t $(PREFIX)/lib/smlnj-lib-$(SMLNJLIB_VER) $$lib" ; \
+		install -D -m 0644 -t $(PREFIX)/lib/smlnj-lib-$(SMLNJLIB_VER) $$lib ; \
 	done
 
 
