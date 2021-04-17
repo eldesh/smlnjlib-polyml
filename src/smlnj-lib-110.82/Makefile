@@ -3,6 +3,9 @@ POLYMLC     ?= polyc
 POLYMLFLAGS ?= -q --error-exit --use "../../script/load.sml"
 MLLEX       ?= mllex-polyml
 MLYACC      ?= mlyacc-polyml
+PREFIX      ?= /usr/local/polyml
+LIBDIR      ?= /usr/local/polyml/lib
+MLYACC_LIB  ?= mlyacc-lib/mlyacc-lib-1.0.0.poly
 
 TARGET := \
 	smlnj-util-lib.poly \
@@ -58,11 +61,7 @@ regexp-lib.poly: smlnj-util-lib.poly $(wildcard ./RegExp/*.sml ./RegExp/BackEnd/
 
 
 html-lib.poly: smlnj-util-lib.poly $(HTML_SRC)
-	@echo "MLYACC_LIB: $(MLYACC_LIB)"
-ifeq ($(MLYACC_LIB),)
-	$(error Please set MLYACC_LIB to path to mlyacc-lib-1.0.0.poly)
-endif
-	$(call build-module,HTML,./$< $(MLYACC_LIB))
+	$(call build-module,HTML,./$< $(LIBDIR)/$(MLYACC_LIB))
 
 
 pp-lib.poly: smlnj-util-lib.poly html-lib.poly $(wildcard ./PP/src/* ./PP/pp-lib.cm ./PP/devices/*)
