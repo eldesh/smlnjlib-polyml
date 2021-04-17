@@ -10,25 +10,35 @@ This repository provides re-ported `smlnj-lib` from MLton to Poly/ML.
 
 ## Build
 
-Build with `make`.
+To build `smlnj-lib`, run the default target of make.
 
 ```sh
 $ make
 ```
 
+`smlnj-lib` depends on `mlyacc-lib`.
+Therefore, if you do not have `/usr/local/polyml/lib/mlyacc-lib/mlyacc-lib-1.0.0.poly`, please set `LIBDIR` or `MLYACC_LIB`:
+
+```sh
+$ make LIBDIR=~/.sml/polyml/5.8.1/lib
+```
+
+The path to the `mlyacc-lib` is referenced with `$(LIBDIR)/$(MLYACC_LIB)`.
+By default, these variables are set to `/usr/local/polyml/lib` and `mlyacc-lib/mlyacc-lib-1.0.0.poly` each other.
+
 
 ## Install
 
-Install library with `make install`.
+To install library, run the `install` target.
 
 ```sh
-$ sudo make install
+$ make install
 ```
 
-It is also possible specify install directory with `PREFIX` parameter.
+To change the installation directory, specify `PREFIX`:
 
 ```sh
-$ sudo make PREFIX=$HOME/local install
+$ make install PREFIX=~/.sml/polyml/5.8.1
 ```
 
 
@@ -48,5 +58,5 @@ $ poly
 see LICENSE file for details.
 
 
-[njlib_mlton]: http://mlton.org/SMLNJLibrary
+[njlib_mlton]: http://mlton.org/SMLNJLibrary "smlnj-lib"
 
